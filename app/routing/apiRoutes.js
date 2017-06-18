@@ -15,16 +15,16 @@ module.exports = function(app, path){
         res.end();
     });
 
-    // app.post("/api/friends", function(req, res){
-    //     // var friends = req.params.characters;
-    //     // var friends = req.params.characters;
+    app.post("/api/friends", function(req, res){
+        var newFriends = req.body;
 
-    //     if(true){
-    //         //push
-    //     }
+        if(data.friends.length < 10){
+            data.friends.push(newFriends);
+            res.end();
+        }
 
-    //     else{
-    //         //res.end();
-    //     }
-    // })
+        else{
+            //res.end();
+        }
+    })
 }

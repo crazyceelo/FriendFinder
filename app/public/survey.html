@@ -201,49 +201,6 @@
       $(selector).chosen(config[selector]);
     }
 
-	function modalContent(){
-
-		// Here we get the location of the root page.
-		// We use this instead of explicitly saying the URL is localhost:3001 because the url will change when we deploy.
-		var currentURL = window.location.origin;
-
-		// The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-		$.ajax({url: currentURL + "/api/friends", method: "GET"})
-			.done(function(friends) {
-
-				// Here we are logging the URL so we have access to it for troubleshooting
-				console.log("------------------------------------");
-				console.log("URL: " + currentURL + "/api/friends");
-				console.log("------------------------------------");
-
-				// Here we then log the NYTData to console, where it will show up as an object.
-				// console.log(friends);
-				// alert(friends[0].scores);
-				// alert(friends[0].name + friends[1].name);
-				$("#matchName").text(friends[0].name);
-	    		$('#matchImg').attr("src", friends[0].photo);
-				console.log("------------------------------------")
-
-				// Loop through, compare, and display best match (least differences)
-				// for (var i=0; i < friends.length; i++){
-
-				// 	// alert(friends[i].scores);
-
-
-				// 	// // Create the HTML Well (Section) and Add the table content for each reserved table
-				// 	// var tableSection = $("<div>");
-				// 	// tableSection.addClass('well');
-				// 	// tableSection.attr('id', 'tableWell-' + i+1)
-				// 	// $('#tableSection').append(tableSection);
-
-				// 	// var tableNumber = i + 1;
-
-
-				// 	// Then display the remaining fields in the HTML (Section Name, Date, URL)
-				// 	// $("#tableWell-"+ i+1).append('<h2><span class="label label-primary">' + tableNumber + "</span> | " + friends[i].customerID + "</h2>");
-				// }
-			});
-	}
 
     // Capture the form inputs 
     $("#submit").on("click", function(){
@@ -268,28 +225,54 @@
 		if (validateForm() == true)
 		{
 			// Create an object for the user's data
-	    	var newFriends = {
+	    	var newFriend = {
 	    		name: $("#name").val(),
 	    		photo: $("#photo").val(),
 	    		scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val(), ]
 	    	}
-			// console.log(newFriends);
+			// console.log(newFriend);
 
 	    	// Grab the URL of the website
 	    	var currentURL = window.location.origin;
+			var friendScore = newFriend.scores;
 
-	    	// AJAX post the data to the friends API. 
-	    	$.post(currentURL + "/api/friends", newFriends, function(data){
-				console.log(data.friends);
+	    	// // AJAX post the data to the friends API. 
+	    	$.post(currentURL + "/api/friends", newFriend, function(data){
 	    		// Grab the result from the AJAX post so that the best match's name and photo are displayed.
-	    		
-				$("#matchName").text(data.name);
-	    		$('#matchImg').attr("src", data.photo);
+	    		$.ajax({url: currentURL + "/api/friends", method: "GET"}).done(function(friends) {
 
-		    	// Show the modal with the best match
-				modalContent();
-		    	$("#resultsModal").modal('toggle');
+				// Here we are logging the URL so we have access to it for troubleshooting
+				console.log("------------------------------------");
+				console.log("URL: " + currentURL + "/api/friends");
+				console.log("------------------------------------");
 
+				// Here we then log the NYTData to console, where it will show up as an object.
+	
+				console.log("------------------------------------")
+				var allFriendsScores = [];
+				var newFriendScores = newFriend.scores;
+				// Loop through, compare, and display best match (least differences)
+				for (var i=0; i < friends.length; i++){
+					allFriendsScores.push(friends[i].scores);
+				}
+				// console.log(allFriendsScores[0][0]);
+				// console.log(newFriendScores[0]);
+				var diff = [];
+
+				var one = (allFriendsScores[0][0] - newFriendScores[0]) * -1 ;
+				console.log(one);
+
+				
+
+				
+
+				// Show the modal with the best match
+				$("#resultsModal").modal('toggle');
+			});
+
+
+				// $("#matchName").text(data.name);
+	    		// $('#matchImg').attr("src", data.photo);
 	    	});
 		}
 		else

@@ -22,9 +22,11 @@ module.exports = function(app, path){
             data.friends.push(newFriends);
             res.end();
         }
+        
 
         else{
             //res.end();
         }
+        // console.log(data.friends.length);
     })
 }

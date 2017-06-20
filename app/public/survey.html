@@ -255,12 +255,44 @@
 				for (var i=0; i < friends.length; i++){
 					allFriendsScores.push(friends[i].scores);
 				}
-				// console.log(allFriendsScores[0][0]);
-				// console.log(newFriendScores[0]);
-				var diff = [];
+
+				var compare = [];
+				var compute = [];
+				for (var i = 0; i <allFriendsScores.length; i++){
+					for (var j = 0; j <allFriendsScores[i].length; j++){
+						for (var k = 0; k <newFriendScores.length; k++){
+							var test = (allFriendsScores[i][j] - newFriendScores[k]) * -1;
+							// compute.push(test);
+							// console.log(compute);
+						}
+					}
+				}
 
 				var one = (allFriendsScores[0][0] - newFriendScores[0]) * -1 ;
-				console.log(one);
+				var two = (allFriendsScores[0][1] - newFriendScores[1]) * -1 ;
+				var three = (allFriendsScores[0][2] - newFriendScores[2]) * -1 ;
+				var four = (allFriendsScores[0][3] - newFriendScores[3]) * -1 ;
+				var five = (allFriendsScores[0][4] - newFriendScores[4]) * -1 ;
+				var six = (allFriendsScores[0][5] - newFriendScores[5]) * -1 ;
+				var seven = (allFriendsScores[0][6] - newFriendScores[6]) * -1 ;
+				var eight = (allFriendsScores[0][7] - newFriendScores[7]) * -1 ;
+				var nine = (allFriendsScores[0][8] - newFriendScores[8]) * -1 ;
+				var ten = (allFriendsScores[0][9] - newFriendScores[9]) * -1 ;
+				
+				compare.push(one, two, three, four, five, six, seven, eight, nine, ten);
+				
+				function diff(number){
+					return number >= 1;
+				}
+
+				var totalDifference = compare.filter(diff);
+
+				function getSum(total, num){
+					return total + num;
+				}
+
+				var sum = totalDifference.reduce(getSum);
+				// console.log(sum);
 
 				
 
